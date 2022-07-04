@@ -1,10 +1,14 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
+import { CocktailRoutes } from "./common/routes";
 
-const routes: Routes = [];
+export const appRoutes: Routes = [
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+	//redirect if empty
+	{ path: '', pathMatch: 'full', redirectTo: CocktailRoutes.Root },
+
+	//cocktail generator module
+	{
+		path: CocktailRoutes.Root,
+		loadChildren: () => import('src/app/modules/cocktail/cocktail.module').then(m => m.CocktailModule)
+	}
+];
