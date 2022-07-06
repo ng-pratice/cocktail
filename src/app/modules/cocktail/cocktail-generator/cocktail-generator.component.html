@@ -1,17 +1,18 @@
 <div class="row">
 	<div class="col">
-		<p>cocktail-generator works!</p>
+		<pre>{{ cocktail | json }}</pre>
 	</div>
 </div>
 
 <div class="row">
-
 	<div class="col-2">
-		<button mat-flat-button (click)="loadRandomCocktail()">{{'Random'}}</button>
+		<button mat-flat-button (click)="loadRandomCocktail()">
+			{{ "Random" }}
+		</button>
 	</div>
 
 	<div class="col-10">
-		<span *ngFor="let key of keys" class="row">{{key}}</span>
+		<span *ngFor="let key of keys" class="row">{{ key }}</span>
 	</div>
-
 </div>
+

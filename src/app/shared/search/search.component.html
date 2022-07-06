@@ -1,0 +1,49 @@
+<div class="relative">
+	<div class="input-group">
+		<label class="input-group-text" for="search">
+			<i class="bi bi-search"></i>
+		</label>
+		<input
+			id="search"
+			name="search"
+			ngModel
+			class="form-control me-2"
+			type="search"
+			placeholder="Search"
+			aria-label="Search"
+			aria-describedby="search"
+			(ngModelChange)="onSearchInputChanged($event)"
+		/>
+	</div>
+	<div *ngIf="cocktails.drinks?.length || queryNotFound" class="results-wrapper">
+		<div class="results">
+			<ng-container *ngIf="!queryNotFound; else notFound">
+				<div class="card mb-2" *ngFor="let drink of cocktails.drinks">
+					<div class="row g-0">
+						<div class="col-md-4">
+							<img
+								[src]="drink.strDrinkThumb"
+								class="img-fluid rounded-start"
+								[alt]="drink.strDrink"
+							/>
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h2 class="card-title">{{ drink.strDrink }}</h2>
+								<p class="card-text">
+									{{ drink.strAlcoholic }} {{ drink.strCategory }}
+								</p>
+								<p class="card-text"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</ng-container>
+			<ng-template #notFound>
+				<p class="not-found">
+					Cocktails not found.
+				</p>
+			</ng-template>
+		</div>
+	</div>
+</div>

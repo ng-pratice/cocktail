@@ -1,31 +1,29 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { CocktailModel } from "../../../models/cocktail-model";
-import { CocktailsSearchResultModel } from "../../../models/cocktails-search-result-model";
-import { CocktailModule } from "../cocktail.module";
+import { CocktailModel } from '../../../models/cocktail-model';
+import { CocktailsSearchResultModel } from '../../../models/cocktails-search-result-model';
+import { CocktailService } from '../../cocktail.service';
+import { CocktailModule } from '../cocktail.module';
 
 @Component({
 	selector: 'app-cocktail-generator',
-	templateUrl: './cocktail-generator.component.html'
+	templateUrl: './cocktail-generator.component.html',
 })
 export class CocktailGeneratorComponent implements OnInit {
-
 	public cocktail: CocktailModel = {} as CocktailModel;
-	public keys: string[] = Object.keys(CocktailModule)
+	public keys: string[] = Object.keys(CocktailModule);
 
-	constructor(private readonly _httpClient: HttpClient) {
-	}
+	constructor(
+		private readonly _httpClient: HttpClient,
+		private readonly _cocktailService: CocktailService
+	) {}
 
-	ngOnInit(): void {
-	}
+	ngOnInit(): void {}
 
 	public loadRandomCocktail(): void {
-		const base = 'https://www.thecocktaildb.com/';
-		this._httpClient.get<CocktailsSearchResultModel>(base + 'api/json/v1/1/random.php')
-			.subscribe(({ drinks }) => {
-				this.cocktail = drinks.length !== 0
-					? drinks[0]
-					: {} as CocktailModel;
-			})
+		this._cocktailService.loadRandomCocktail().subscribe(({ drinks }) => {
+			this.cocktail =
+				drinks.length !== 0 ? drinks[0] : ({} as CocktailModel);
+		});
 	}
 }
